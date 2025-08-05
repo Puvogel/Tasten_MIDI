@@ -1,0 +1,59 @@
+% Please add \usepackage{tikz} to your document preamble.
+
+\begin{center}
+\begin{tikzpicture}[scale=0.2]
+\tikzstyle{every node}+=[inner sep=0pt]
+\draw [black] (48.6,-26.9) circle (7);
+\draw (48.6,-26.9) node {$Idle$};
+\draw [black] (48.6,-26.9) circle (6.4);
+\draw [black] (85.9,-26.9) circle (7);
+\draw (85.9,-26.9) node {$Calibrate High$};
+\draw [black] (85.9,-60) circle (7);
+\draw (85.9,-60) node {$Calibrate Low$};
+\draw [black] (7.2,-7.2) circle (7);
+\draw (7.2,-7.2) node {$Profile 1$};
+\draw [black] (7.2,-26.9) circle (7);
+\draw (7.2,-26.9) node {$Profile 2$};
+\draw [black] (7.2,-48.6) circle (7);
+\draw (7.2,-48.6) node {$Profile 3$};
+\draw [black] (79.207,-28.932) arc (-76.91165:-103.08835:52.8);
+\fill [black] (79.21,-28.93) -- (78.31,-28.63) -- (78.54,-29.6);
+\draw (67.25,-30.8) node [below,align=center] {$[Start Calibration] ; s=0$};
+\draw [black] (83.818,-53.324) arc (-167.18127:-192.81873:44.506);
+\fill [black] (83.82,-53.32) -- (84.13,-52.43) -- (83.15,-52.66);
+\draw (82.21,-43.45) node [left,align=center] {$[Calibrate Next] ; s=s$};
+\draw [black] (87.903,-33.6) arc (12.3032:-12.3032:46.224);
+\fill [black] (87.9,-33.6) -- (87.58,-34.49) -- (88.56,-34.28);
+\draw (89.46,-43.45) node [right,align=center] {$[Calibrate Next] ; s++$};
+\draw [black] (54.507,-23.175) arc (115.46571:64.53429:29.636);
+\fill [black] (54.51,-23.18) -- (55.44,-23.28) -- (55.01,-22.38);
+\draw (67.25,-19.8) node [above,align=center] {$[Calibrate Next] && s==4 ; s=0 && save config$};
+\draw [black] (79.384,-57.452) arc (-114.55467:-148.617:62.718);
+\fill [black] (51.9,-33.07) -- (51.89,-34.01) -- (52.75,-33.49);
+\draw (54.66,-47.81) node [below,align=center] {$[Switch Profile] ; s=0$};
+\draw [black] (92.595,-25.005) arc (94.97383:-94.97383:18.515);
+\fill [black] (92.6,-25) -- (93.44,-25.43) -- (93.35,-24.44);
+\draw (113.22,-43.45) node [right,align=center] {$[Start Calibration] ; s=0$};
+\draw [black] (13.99,-5.557) arc (97.39007:31.71548:32.27);
+\fill [black] (13.99,-5.56) -- (14.85,-5.95) -- (14.72,-4.96);
+\draw (45.26,-7.83) node [above,align=center] {$[Switch Profile] && p==3 ; p=1$};
+\draw [black] (14.026,-8.743) arc (75.00491:54.10063:88.733);
+\fill [black] (43.1,-22.58) -- (42.74,-21.7) -- (42.16,-22.51);
+\draw (31.77,-13.81) node [above,align=center] {$-- ; --$};
+\draw [black] (14.126,-25.888) arc (96.62969:83.37031:119.309);
+\fill [black] (14.13,-25.89) -- (14.98,-26.29) -- (14.86,-25.3);
+\draw (27.9,-24.59) node [above,align=center] {$[Switch Profile] && p==1 ; p= 2$};
+\draw [black] (41.652,-27.743) arc (-84.48568:-95.51432:143.105);
+\fill [black] (41.65,-27.74) -- (40.81,-27.32) -- (40.9,-28.32);
+\draw (27.9,-28.91) node [below,align=center] {$-- ; --$};
+\draw [black] (42.4,-30.15) -- (13.4,-45.35);
+\fill [black] (13.4,-45.35) -- (14.34,-45.42) -- (13.88,-44.54);
+\draw (14.54,-37.21) node [above,align=center] {$[Switch Profile] && p==2 ; p=3$};
+\draw [black] (45.004,-32.895) arc (-36.06132:-88.6157:39.309);
+\fill [black] (45,-32.89) -- (44.13,-33.25) -- (44.94,-33.84);
+\draw (34.07,-45.08) node [below,align=center] {$-- ; --$};
+\draw [black] (48.6,-39) -- (48.6,-33.9);
+\draw (48.6,-39.5) node [below,align=center] {$Start$};
+\fill [black] (48.6,-33.9) -- (48.1,-34.7) -- (49.1,-34.7);
+\end{tikzpicture}
+\end{center}

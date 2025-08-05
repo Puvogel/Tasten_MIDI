@@ -1,0 +1,166 @@
+{
+  "nodes": [
+    {
+      "x": 749,
+      "y": 534,
+      "text": "Idle",
+      "isAcceptState": true,
+      "textOnly": false
+    },
+    {
+      "x": 1122,
+      "y": 534,
+      "text": "Calibrate High",
+      "isAcceptState": false,
+      "textOnly": false
+    },
+    {
+      "x": 1122,
+      "y": 865,
+      "text": "Calibrate Low",
+      "isAcceptState": false,
+      "textOnly": false
+    },
+    {
+      "x": 335,
+      "y": 337,
+      "text": "Profile 1",
+      "isAcceptState": false,
+      "textOnly": false
+    },
+    {
+      "x": 335,
+      "y": 534,
+      "text": "Profile 2",
+      "isAcceptState": false,
+      "textOnly": false
+    },
+    {
+      "x": 335,
+      "y": 751,
+      "text": "Profile 3",
+      "isAcceptState": false,
+      "textOnly": false
+    }
+  ],
+  "links": [
+    {
+      "type": "Link",
+      "nodeA": 0,
+      "nodeB": 1,
+      "text": "[Start Calibration] ; s=0",
+      "lineAngleAdjust": 0,
+      "parallelPart": 0.48377581120944,
+      "perpendicularPart": 34
+    },
+    {
+      "type": "Link",
+      "nodeA": 1,
+      "nodeB": 2,
+      "text": "[Calibrate Next] ; s=s",
+      "lineAngleAdjust": 0,
+      "parallelPart": 0.586206896551724,
+      "perpendicularPart": 31
+    },
+    {
+      "type": "Link",
+      "nodeA": 2,
+      "nodeB": 1,
+      "text": "[Calibrate Next] ; s++",
+      "lineAngleAdjust": 0,
+      "parallelPart": 0.426332288401254,
+      "perpendicularPart": 30
+    },
+    {
+      "type": "Link",
+      "nodeA": 1,
+      "nodeB": 0,
+      "text": "[Calibrate Next] && s==4 ; s=0 && save config",
+      "lineAngleAdjust": 0,
+      "parallelPart": 0.513274336283186,
+      "perpendicularPart": 66
+    },
+    {
+      "type": "Link",
+      "nodeA": 2,
+      "nodeB": 0,
+      "text": "[Switch Profile] ; s=0",
+      "lineAngleAdjust": 3.14159265358979,
+      "parallelPart": 0.500502633801118,
+      "perpendicularPart": -51.6956204216069
+    },
+    {
+      "type": "Link",
+      "nodeA": 2,
+      "nodeB": 1,
+      "text": "[Start Calibration] ; s=0",
+      "lineAngleAdjust": 0,
+      "parallelPart": 0.326283987915408,
+      "perpendicularPart": 259
+    },
+    {
+      "type": "Link",
+      "nodeA": 0,
+      "nodeB": 3,
+      "text": "[Switch Profile] && p==3 ; p=1",
+      "lineAngleAdjust": 0,
+      "parallelPart": 0.514592709227612,
+      "perpendicularPart": 95.5088285744974
+    },
+    {
+      "type": "Link",
+      "nodeA": 3,
+      "nodeB": 0,
+      "text": "-- ; --",
+      "lineAngleAdjust": 3.14159265358979,
+      "parallelPart": 0.339987844613644,
+      "perpendicularPart": -27.0854050180625
+    },
+    {
+      "type": "Link",
+      "nodeA": 0,
+      "nodeB": 4,
+      "text": "[Switch Profile] && p==1 ; p= 2",
+      "lineAngleAdjust": 0,
+      "parallelPart": 0.536231884057971,
+      "perpendicularPart": 18
+    },
+    {
+      "type": "Link",
+      "nodeA": 4,
+      "nodeB": 0,
+      "text": "-- ; --",
+      "lineAngleAdjust": 0,
+      "parallelPart": 0.471014492753623,
+      "perpendicularPart": 15
+    },
+    {
+      "type": "Link",
+      "nodeA": 0,
+      "nodeB": 5,
+      "text": "[Switch Profile] && p==2 ; p=3",
+      "lineAngleAdjust": 0,
+      "parallelPart": 0.550037760029293,
+      "perpendicularPart": 0
+    },
+    {
+      "type": "Link",
+      "nodeA": 5,
+      "nodeB": 0,
+      "text": "-- ; --",
+      "lineAngleAdjust": 0,
+      "parallelPart": 0.460022427168913,
+      "perpendicularPart": 76.5771890977129
+    },
+    {
+      "type": "StartLink",
+      "node": 0,
+      "text": "Start",
+      "deltaX": 0,
+      "deltaY": 121
+    }
+  ],
+  "nodeRadius": 70,
+  "canvasWidth": 1800,
+  "canvasHeight": 1000
+}
