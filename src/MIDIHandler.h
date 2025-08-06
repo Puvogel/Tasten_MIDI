@@ -100,7 +100,7 @@ void debugPrint(const char* label, byte ch, byte note, byte val) {
   Serial.print(ch);
   Serial.print(" | Note: ");
   Serial.print(note);
-  Serial.print(" | Val: ");
+  Serial.print(" | Value: ");
   Serial.println(val);
 #endif
 }
