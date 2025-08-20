@@ -1,8 +1,10 @@
 #define ENABLE_DEBUG_OUTPUT
 
 #include <Arduino.h>
-#include "Tasten_ButtonsAndLEDs.h"
+#include "Tasten_Control.h"
 #include "Tasten_MIDIHandler.h"
+#include "Percussion_Control.h"
+#include "Percussion_MIDIHandler.h"
 
 void setup() {
   Serial.begin(115200);
