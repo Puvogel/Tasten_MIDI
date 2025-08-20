@@ -4,7 +4,7 @@
 
 #include <Arduino.h>
 #include <EEPROM.h>
-#include "MIDIHandler.h"
+#include "Tasten_MIDIHandler.h"
 
 // === LED Pins ===
 const byte profileLEDs[3] = {4, 5, 6};     // LED Grün: Jumper Orange, Jumper Gelb, Jumper Grün
