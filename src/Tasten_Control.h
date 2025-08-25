@@ -5,6 +5,8 @@
 #include <Arduino.h>
 #include <EEPROM.h>
 #include "Tasten_MIDIHandler.h"
+// EEPROM-Handler
+#include "EEPROM_Handler.h"
 
 // === LED Pins ===
 const byte profileLEDs[3] = {4, 5, 6};     // LED Grün: Jumper Orange, Jumper Gelb, Jumper Grün
@@ -43,6 +45,10 @@ void setupPins() {
   pinMode(btnSwitchProfile, INPUT_PULLUP);
 }
 
+void setupMIDI() {
+  Serial.begin(31250);
+}
+
 void updateProfileLEDs() {
   for (byte i = 0; i < 3; i++) {
     digitalWrite(profileLEDs[i], i == currentProfile ? LOW : HIGH); // HIGH-Side Schaltung
@@ -74,8 +80,6 @@ void cancelCalibration() {
 void finishCalibration() {
   for (int i = 0; i < noteCount; i++) {
     thresholds[i] = brightValues[i] - ((brightValues[i] - darkValues[i]) * (thresholdOffsetPercent / 100.0));
-    EEPROM.put(eepromStartAddress + currentProfile * profileSize + i * sizeof(int) * 2, brightValues[i]);
-    EEPROM.put(eepromStartAddress + currentProfile * profileSize + i * sizeof(int) * 2 + sizeof(int), darkValues[i]);
 #ifdef ENABLE_DEBUG_OUTPUT
     Serial.print("Sensor "); Serial.print(i);
     Serial.print(" hell: "); Serial.print(brightValues[i]);
@@ -83,6 +87,8 @@ void finishCalibration() {
     Serial.print(" threshold: "); Serial.println(thresholds[i]);
 #endif
   }
+  // Profil speichern über EEPROM_Handler
+  saveProfile(currentProfile, brightValues, darkValues, noteCount, eepromStartAddress, profileSize);
   for (int i = 0; i < 3; i++) {
     digitalWrite(ledHigh, LOW);
     digitalWrite(ledLow, LOW);

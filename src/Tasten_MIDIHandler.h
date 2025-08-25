@@ -3,7 +3,9 @@
 #define Tasten_MIDI_HANDLER_H
 
 #include <Arduino.h>
-#include <SoftwareSerial.h>
+//#include <SoftwareSerial.h>
+// EEPROM-Handler
+#include "EEPROM_Handler.h"
 
 // Funktionsprototypen
 void handleSensors();
@@ -16,8 +18,8 @@ void debugPrint(const char* label, byte ch, byte note, byte val);
 //--------------------------------------
 
 // === MIDI-Konfiguration ===
-const byte midiTxPin = 10;
-SoftwareSerial midiSerial(midiTxPin, 255);
+//const byte midiTxPin = 1;
+//SoftwareSerial midiSerial(midiTxPin, 255);
 const byte midiChannel = 1;
 const byte noteCount = 5;
 const byte noteNumbers[noteCount] = {60, 62, 64, 65, 67};  // C4–G4
@@ -26,7 +28,7 @@ int thresholds[noteCount];
 int brightValues[noteCount];
 int darkValues[noteCount];
 const int hysteresis = 20;
-const float thresholdOffsetPercent = 5.0;
+const float thresholdOffsetPercent = 10.0;
 
 // === EEPROM ===
 const int eepromStartAddress = 0;
@@ -37,12 +39,9 @@ byte currentProfile = 0;
 bool noteIsOn[noteCount] = {false};
 int aftertouch[noteCount] = {0};
 
+// Profil laden über EEPROM_Handler
 void loadProfile(byte profile) {
-  for (int i = 0; i < noteCount; i++) {
-    EEPROM.get(eepromStartAddress + profile * profileSize + i * sizeof(int) * 2, brightValues[i]);
-    EEPROM.get(eepromStartAddress + profile * profileSize + i * sizeof(int) * 2 + sizeof(int), darkValues[i]);
-    thresholds[i] = brightValues[i] - ((brightValues[i] - darkValues[i]) * (thresholdOffsetPercent / 100.0));
-  }
+  loadProfile(profile, brightValues, darkValues, thresholds, noteCount, eepromStartAddress, profileSize, thresholdOffsetPercent);
 #ifdef ENABLE_DEBUG_OUTPUT
   Serial.print("Profil "); Serial.print(profile + 1); Serial.println(" geladen");
 #endif
@@ -88,9 +87,9 @@ void sendAftertouch(byte channel, byte pitch, byte pressure) {
 }
 
 void sendMIDI(byte status, byte data1, byte data2) {
-  midiSerial.write(status);
-  midiSerial.write(data1);
-  midiSerial.write((uint8_t)data2);
+  Serial.write(status);
+  Serial.write(data1);
+  Serial.write((uint8_t)data2);
 }
 
 void debugPrint(const char* label, byte ch, byte note, byte val) {
