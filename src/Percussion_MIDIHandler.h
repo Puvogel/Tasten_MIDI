@@ -40,23 +40,52 @@ void setupMIDI() {
 
 // Sensor auslesen und MIDI senden
 void handlePercussionSensors() {
+  static unsigned long lastScanTime = 0;
+  static int peakValue[PERC_PAD_COUNT] = {0};
+  static int peakVelocity[PERC_PAD_COUNT] = {0};
+  static bool peakDetected[PERC_PAD_COUNT] = {false};
+  unsigned long now = millis();
+
+  // Messzeitraum (z.B. 20ms)
+  if (now - lastScanTime > 20) {
+    // Sende für jeden Pad den höchsten Peak als MIDI
+    for (byte i = 0; i < PERC_PAD_COUNT; i++) {
+      if (peakDetected[i]) {
+        noteOn(midiChannel, padNotes[i], peakVelocity[i]);
+        lastPercNote = padNotes[i];
+        lastPercVelocity = peakVelocity[i];
+        padIsOn[i] = true;
+#ifdef ENABLE_DEBUG_OUTPUT
+        Serial.print("Peak MIDI: Pad "); Serial.print(i); Serial.print(" Note "); Serial.print(padNotes[i]);
+        Serial.print(" Velocity "); Serial.println(peakVelocity[i]);
+#endif
+      }
+      peakValue[i] = 0;
+      peakVelocity[i] = 0;
+      peakDetected[i] = false;
+    }
+    lastScanTime = now;
+  }
+
+  // Erfasse Peaks innerhalb des Zeitraums
   for (byte i = 0; i < PERC_PAD_COUNT; i++) {
     int value = analogRead(sensorPins[i]);
     int rest = restValues[i];
     int peak = peakValues[i];
     int velocity = 0;
-    // Normierung: Wert zwischen Ruhewert und Peak auf MIDI-Range
     if (peak != rest) {
       velocity = map(abs(value - rest), 0, abs(peak - rest), 0, 127);
       velocity = constrain(velocity, 0, 127);
     }
-    // Schlag erkennen: Abweichung vom Ruhewert > Schwellwert
-    if (abs(value - rest) > 50 && !padIsOn[i]) {
-      noteOn(midiChannel, padNotes[i], velocity);
-      lastPercNote = padNotes[i];
-      lastPercVelocity = velocity;
-      padIsOn[i] = true;
-    } else if (abs(value - rest) < 10 && padIsOn[i]) {
+    if (abs(value - rest) > 20) {
+      if (!peakDetected[i] || abs(value - rest) > abs(peakValue[i] - rest)) {
+        peakValue[i] = value;
+        peakVelocity[i] = velocity;
+        peakDetected[i] = true;
+      }
+    }
+    // Optional: NoteOff nach kurzer Zeit
+    if (padIsOn[i] && abs(value - rest) < 10) {
       noteOff(midiChannel, padNotes[i], 0);
       padIsOn[i] = false;
     }
